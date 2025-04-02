@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Theme settings",
+    "settings": [
+      {
+        "type": "text",
+        "id": "color_scheme",
+        "label": "Color Scheme"
+      }
+    ]
+  }
+]

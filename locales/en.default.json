@@ -1,0 +1,15 @@
+{
+    "general": {
+      "welcome": "Welcome to our store!",
+      "cart": "Cart",
+      "checkout": "Checkout"
+    },
+    "products": {
+      "add_to_cart": "Add to cart",
+      "sold_out": "Sold out",
+      "product_on_sale": "On Sale!"
+    },
+    "footer": {
+      "copyright": "&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved."
+    }
+}
