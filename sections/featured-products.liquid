@@ -1,71 +1,45 @@
-<h2 class="text-2xl font-semibold mb-4">Featured Products</h2>
+<h2 class="text-2xl font-semibold mb-4">{{ section.settings.heading }}</h2>
 <div class="grid grid-cols-1 md:grid-cols-3 gap-0">
-    {% for product in collections.frontpage.products %}
-        <product-card class="product-card">
-            {% assign first_image = product.featured_image %}
-            {% assign second_image = product.media[1].src %}
-            <div class="px-2 py-4 relative">
-                <a href="{{ product.url }}" class="product-card__image-wrapper relative overflow-hidden">
-                    {% if first_image %}
-                        <img
-                            src="{{ first_image | img_url: 'medium' }}" 
-                            alt="{{ product.title }}" id="product-image-{{ product.id }}" 
-                            class="w-full h-auto block border rounded-lg product-card__image product-card__image--primary"
-                        />
-                    {% endif %}
-                    {% if second_image %}
-                        <img
-                            src="{{ second_image | image_url: width: 600 }}"
-                            alt="{{ product.title }} alternate view"
-                            class="w-full h-auto absolute top-0 left-0 opacity-0 border product-card__image product-card__image--secondary" 
-                        />
-                    {% endif %}
-                </a>
-                    {% if product.variants.size > 1 %}
-                        <div class="mt-2 flex space-x-2 mt-[15px]">
-                            {% for option in product.options_with_values %}
-                                {% if option.name contains 'Color' %}
-                                    {% for value in option.values %}
-                                        {% assign variant_image = product.first_available_variant.image %}
-                                        {% for variant in product.variants %}
-                                            {% if variant.option1 == value %}
-                                                {% assign variant_image = variant.image %}
-                                            {% endif %}
-                                        {% endfor %}
-                                        <button class="w-6 h-6 rounded-full hover:border-2 hover:border-gray-600"
-                                            style="background-color: {{ value | downcase }};"
-                                            data-variant-image="{{ variant_image | img_url: 'medium' }}"
-                                            onclick="document.getElementById('product-image-{{ product.id }}').src='{{ variant_image | img_url: 'medium' }}'">
-                                        </button>
-                                    {% endfor %}
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                    {% endif %}
-                <a href="{{ product.url }}" class="mt-[15px] block">
-                    <span class="text-base">{{ product.vendor }}</span>
-                    <h3 class="text-lg font-medium text-blue-950">{{ product.title }}</h3>
-                    {% if product.compare_at_price > product.price %}
-                        <p class="text-base">
-                          <span class="line-through">
-                            {{ product.compare_at_price | money }}
-                          </span>
-                          <span class="text-red-600 ml-2">
-                            {{ product.price | money }}
-                          </span>
-                        </p>
-                    {% else %}
-                        <p class="text-base">
-                          <span>{{ product.price | money }}</span>
-                        </p>
-                    {% endif %}
-                </a>
-                {% if product.compare_at_price > product.price %}
-                    <span class="border border-red-500 rounded-xl absolute top-8 left-8 text-red-500 text-base font-medium px-3 rounded z-10">
-                      {{ 'products.product_on_sale' | t }}
-                    </span>
-                {% endif %}
-            </div>
-        </product-card>
+    {% for block in section.blocks %}
+        {% assign product = all_products[block.settings.product] %}
+        {% if product %}
+            {% render 'product-card', product: product %}
+        {% endif %}
     {% endfor %}
 </div>
+
+{% schema %}
+    {
+      "name": "Featured Products",
+      "tag": "section",
+      "class": "featured-products-section",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Featured Products"
+        }
+      ],
+      "blocks": [
+        {
+          "type": "product",
+          "name": "Product",
+          "settings": [
+            {
+              "type": "product",
+              "id": "product",
+              "label": "Select product"
+            }
+          ]
+        }
+      ],
+      "max_blocks": 10,
+      "presets": [
+        {
+          "name": "Featured Products",
+          "category": "Products"
+        }
+      ]
+    }
+{% endschema %}
