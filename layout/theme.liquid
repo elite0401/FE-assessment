@@ -30,7 +30,7 @@
     {{ content_for_header }}
 
     {{ 'theme.css' | asset_url | stylesheet_tag: preload: true }}
-    <script src="https://cdn.tailwindcss.com" defer="defer"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
     <script type="module" src="{{ 'component-product-card.js' | asset_url }}"></script>
 
 </head>

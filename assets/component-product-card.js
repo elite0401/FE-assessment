@@ -25,7 +25,11 @@ class ProductCard extends HTMLElement {
 
         this.querySelectorAll('button').forEach((button) => {
             button.addEventListener('click', () => {
+                console.log(this.secondaryImage);
+                console.log(this.primaryImage);
                 this.secondaryImage.src = button.dataset.variantImage;
+                console.log(this.secondaryImage.src);
+                console.log(this.primaryImage.src);
             });
         });
     }

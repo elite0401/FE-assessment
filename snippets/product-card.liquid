@@ -29,10 +29,9 @@
                                         {% assign variant_image = variant.image %}
                                     {% endif %}
                                 {% endfor %}
-                                <button class="w-6 h-6 rounded-full hover:border-2 hover:border-gray-600"
+                                <button class="w-6 h-6 relative rounded-full"
                                     style="background-color: {{ value | downcase }};"
-                                    data-variant-image="{{ variant_image | img_url: 'medium' }}"
-                                    onclick="document.getElementById('product-image-{{ product.id }}').src='{{ variant_image | img_url: 'medium' }}'">
+                                    data-variant-image="{{ variant_image | img_url: 'medium' }}">
                                 </button>
                             {% endfor %}
                         {% endif %}
